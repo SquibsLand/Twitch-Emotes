@@ -4,7 +4,12 @@
         {
             "label": "Vite Build",
             "type": "shell",
-            "command": "Remove-Item -Recurse -Force dist; npm run build"
+            "command": "Remove-Item -Recurse -Force dist; npm run local-build"
         },
+        {
+            "label": "Vite Build GitHub",
+            "type": "shell",
+            "command": "Remove-Item -Recurse -Force dist; npm run build"
+        }
     ]
 }

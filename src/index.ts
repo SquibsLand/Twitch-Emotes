@@ -8,4 +8,5 @@ export const createRoot = ViteReactSSG({
       Component: App,
     },
   ],
+  basename: import.meta.env.MODE === "production" ? "/Twitch-Emotes/" : "/",
 } as const);
