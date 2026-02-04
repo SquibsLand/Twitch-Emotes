@@ -1,6 +1,6 @@
 {
-  "_client-CxXAmcyS.js": {
-    "file": "assets/client-CxXAmcyS.js",
+  "_client-CJf433en.js": {
+    "file": "assets/client-CJf433en.js",
     "name": "client",
     "isDynamicEntry": true,
     "imports": [
@@ -8,12 +8,12 @@
     ]
   },
   "index.html": {
-    "file": "assets/app-C9B435Tb.js",
+    "file": "assets/app-DrTmhNk4.js",
     "name": "app",
     "src": "index.html",
     "isEntry": true,
     "dynamicImports": [
-      "_client-CxXAmcyS.js"
+      "_client-CJf433en.js"
     ]
   }
 }
