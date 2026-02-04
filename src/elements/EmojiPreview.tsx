@@ -1,6 +1,6 @@
-import { useReducer, useRef, useState } from "react";
-import { convertImage } from "../helpers";
-import { exportSizes } from "../consts";
+import { useRef, useState } from "react";
+import { convertImage, exportEmoji, removeFirstMatch } from "../helpers";
+import { exportSizes, imageTypesArray } from "../consts";
 
 type EmojiPreviewParams = Exclude<
   React.ComponentProps<"img">,
@@ -15,7 +15,8 @@ type BulkEmojiPreviewParams = React.ComponentProps<"div"> & {
 
 function EmojiPreview({ file, key, index, ...rest }: EmojiPreviewParams) {
   console.log(index);
-  const [processedImages, setProcessedImages] = useState<Blob[]>();
+  const [hasProcessed, setHasProcessed] = useState(false);
+  const [processedImages, setProcessedImages] = useState<Blob[]>([]);
   const originalImageRef = useRef<HTMLImageElement>(null);
   const onProcess = async () => {
     const image = originalImageRef.current;
@@ -26,6 +27,23 @@ function EmojiPreview({ file, key, index, ...rest }: EmojiPreviewParams) {
         exportSizes.map((size) => convertImage(image, { size })),
       ),
     );
+    console.log("Test", processedImages.length);
+    if (processedImages.length ?? 0 > 0) {
+      setHasProcessed(true);
+    }
+  };
+
+  const downloadAll = async () => {
+    if ((processedImages.length ?? 0) <= 0) return;
+    const zipBlob = await exportEmoji(file.name, processedImages);
+    const url = URL.createObjectURL(zipBlob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = removeFirstMatch(file.name, imageTypesArray);
+    a.click();
+
+    URL.revokeObjectURL(url);
   };
   return (
     <div key={key}>
@@ -42,6 +60,7 @@ function EmojiPreview({ file, key, index, ...rest }: EmojiPreviewParams) {
       <button onClick={onProcess}>
         Process{index != undefined ? `- #${index + 1}` : ""}
       </button>
+      {hasProcessed && <button onClick={downloadAll}>Download All</button>}
     </div>
   );
 }

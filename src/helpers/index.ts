@@ -1,4 +1,10 @@
-import { exportCanvasType, exportSizes } from "../consts";
+import JSZip from "jszip";
+import {
+  exportCanvasType,
+  exportFileType,
+  exportSizes,
+  imageTypesArray,
+} from "../consts";
 
 type convertImageSettings = {
   size: (typeof exportSizes)[number];
@@ -26,4 +32,24 @@ export function convertImage(
       0.9,
     );
   });
+}
+export function removeFirstMatch(
+  str: string,
+  removals: string[] | readonly string[],
+) {
+  for (const r of removals) {
+    if (str.includes(r)) {
+      return str.replace(r, "");
+    }
+  }
+  return str;
+}
+
+export async function exportEmoji(name: string, blobs: Blob[]) {
+  const baseName = removeFirstMatch(name, imageTypesArray);
+  const zip = new JSZip();
+  blobs.forEach((item, index) => {
+    zip.file(`${baseName}.x${exportSizes[index]}${exportFileType}`, item);
+  });
+  return await zip.generateAsync({ type: "blob" });
 }
