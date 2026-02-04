@@ -1,0 +1,19 @@
+{
+  "_client-CxXAmcyS.js": {
+    "file": "assets/client-CxXAmcyS.js",
+    "name": "client",
+    "isDynamicEntry": true,
+    "imports": [
+      "index.html"
+    ]
+  },
+  "index.html": {
+    "file": "assets/app-C9B435Tb.js",
+    "name": "app",
+    "src": "index.html",
+    "isEntry": true,
+    "dynamicImports": [
+      "_client-CxXAmcyS.js"
+    ]
+  }
+}
